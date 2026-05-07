@@ -1,0 +1,17 @@
+streamlit
+pyyaml
+pymysql
+
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langchain-chroma
+langchain-text-splitters
+langgraph
+chromadb
+dashscope
+pypdf
+
+python-docx
+pillow

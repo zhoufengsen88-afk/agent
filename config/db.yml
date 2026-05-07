@@ -1,0 +1,8 @@
+mysql:
+  host: localhost
+  port: 3306
+  database: agent_project
+  user: root
+  password_env: MYSQL_PASSWORD
+  charset: utf8mb4
+  usage_records_table: usage_records
