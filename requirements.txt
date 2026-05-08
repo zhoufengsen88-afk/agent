@@ -2,13 +2,13 @@ streamlit
 pyyaml
 pymysql
 
-langchain
-langchain-core
-langchain-community
-langchain-openai
-langchain-chroma
-langchain-text-splitters
-langgraph
+langchain>=1.0,<2
+langchain-core>=1.0,<2
+langchain-community>=0.4,<0.5
+langchain-openai>=1.0,<2
+langchain-chroma>=1.0,<2
+langchain-text-splitters>=1.0,<2
+langgraph>=1.0,<2
 chromadb
 dashscope
 pypdf

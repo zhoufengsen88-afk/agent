@@ -335,7 +335,7 @@ def add_content():
 
             @tool(description="从外部系统中获取指定用户在指定月份的使用记录")
             def fetch_external_data(user_id: str, month: str) -> str:
-                generrate_external_data()
+                generate_external_data()
                 try:
                     return external_data[user_id][month]
                 except KeyError:

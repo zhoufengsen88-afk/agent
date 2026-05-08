@@ -36,7 +36,7 @@ def get_user_id():
 def get_current_month() -> str:
     return random.choice(month_arr)
 
-def generrate_external_data():
+def generate_external_data():
     if not external_data:
         external_data_path = get_abs_path(agent_conf["external_data_path"])
         if not os.path.exists(external_data_path):
@@ -76,7 +76,7 @@ def fetch_external_data(user_id:str,month:str) -> str:
     except Exception as e:
         logger.warning(f"[fetch_external_data]MySQL查询失败，回退CSV数据源：{str(e)}")
 
-    generrate_external_data()
+    generate_external_data()
 
     try:
         return external_data[user_id][month]
