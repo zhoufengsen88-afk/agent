@@ -7,6 +7,7 @@ from langgraph.runtime import Runtime
 from langgraph.types import Command
 from utils.logger_handler import logger
 from utils.prompt_loader import load_system_prompt, load_report_prompt
+from utils.db_handler import safe_save_tool_call_log
 
 
 @wrap_tool_call
@@ -19,6 +20,13 @@ def monitor_tool(
     try:
         result = handler(request)
         logger.info(f"[tool monitor]工具{request.tool_call['name']}调用成功")
+        safe_save_tool_call_log(
+            request.runtime.context.get("session_id"),
+            request.tool_call["name"],
+            request.tool_call["args"],
+            getattr(result, "content", result),
+            True,
+        )
 
         if request.tool_call['name'] == 'fill_context_for_report':
             logger.info(f"[tool monitor]fill_context_for_report工具被调用，注入上下文 report=True")
@@ -26,6 +34,14 @@ def monitor_tool(
         return result
     except Exception as e:
         logger.info(f"工具{request.tool_call['name']}调用失败: {e}")
+        safe_save_tool_call_log(
+            request.runtime.context.get("session_id"),
+            request.tool_call["name"],
+            request.tool_call["args"],
+            None,
+            False,
+            str(e),
+        )
         raise
 
 

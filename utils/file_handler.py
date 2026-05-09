@@ -17,17 +17,9 @@ def get_file_md5_hex(filepath:str): # 获取文件的md5十六进制字符串
     chunk_size = 4096 # 4kb分片，避免文件过大转换md5时爆内存
     try:
         with open(filepath,'rb') as f: # 将文件分片读取 必须是二进制读取：rb
-            '''
-            chunk = f.read(chunk_size)
-            while chunk:
-                md5_obj.update(chunk)
-                chunk = f.read(chunk_size)
-                # 等于下面的while
-            '''
             while chunk := f.read(chunk_size):
                 md5_obj.update(chunk)
-                md5_hex = md5_obj.hexdigest()
-                return md5_hex
+            return md5_obj.hexdigest()
     except Exception as e:
         logger.error(f"计算文件{filepath}md5失败，{str(e)}")
         return None

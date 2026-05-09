@@ -1,5 +1,7 @@
 import csv
+import os
 import os.path
+from datetime import datetime
 from utils.logger_handler import logger
 from rag.rag_service import RagSummarizeService
 from langchain_core.tools import tool
@@ -11,8 +13,6 @@ from utils.db_handler import fetch_usage_record
 
 rag = RagSummarizeService()
 user_ids = ["1001", "1002", "1003", "1004", "1005", "1006", "1007", "1008", "1009", "1010",]
-month_arr = ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06",
-             "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", ]
 external_data = {}
 
 
@@ -30,11 +30,11 @@ def get_user_location() -> str:
 
 @tool(description="获取用户的id，以纯字符串的形式返回")
 def get_user_id():
-    return random.choice(user_ids)
+    return os.environ.get("AGENT_DEMO_USER_ID", user_ids[0])
 
 @tool(description="获取当前月份，以纯字符串的形式返回")
 def get_current_month() -> str:
-    return random.choice(month_arr)
+    return os.environ.get("AGENT_DEMO_MONTH", agent_conf.get("demo_month", datetime.now().strftime("%Y-%m")))
 
 def generate_external_data():
     if not external_data:

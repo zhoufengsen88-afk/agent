@@ -16,14 +16,18 @@ class ReactAgent:
             middleware=[monitor_tool, log_before_model, report_prompt_switch],
         )
 
-    def execute_stream(self, query):
+    def execute_stream(self, query, session_id=None):
         input_dict = {
             "messages": [
                 {"role": "user", "content": query},
             ]
         }
 
-        for chunk in self.agent.stream(input_dict, stream_mode="values", context={"report": False}):
+        context = {
+            "report": False,
+            "session_id": session_id,
+        }
+        for chunk in self.agent.stream(input_dict, stream_mode="values", context=context):
             latest_message = chunk["messages"][-1]  # 有历史记录所以取最后一条
             if latest_message.content:
                 yield latest_message.content.strip() + "\n"
